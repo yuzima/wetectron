@@ -24,6 +24,8 @@ class mist_layer(object):
     def __call__(self, proposals, source_score, labels, device, return_targets=False):
         num_rois = len(proposals)
         k = int(num_rois * self.portion)
+        if k == 0:
+            k = 1
         num_gt_cls = labels[1:].sum()
         if num_gt_cls != 0 and num_rois != 0:
             cls_prob = source_score[:, 1:]

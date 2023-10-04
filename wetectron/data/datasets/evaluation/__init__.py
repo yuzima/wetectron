@@ -17,7 +17,11 @@ def evaluate(dataset, predictions, output_folder, task='det', **kwargs):
     args = dict(
         dataset=dataset, predictions=predictions, output_folder=output_folder, **kwargs
     )
+    # print(dataset)
+    # print(predictions)
     if isinstance(dataset, datasets.COCODataset) and "voc_2012" not in dataset.ann_file:
+        return coco_evaluation(**args)
+    if isinstance(dataset, datasets.ArgoverseDataset):
         return coco_evaluation(**args)
     elif isinstance(dataset, datasets.PascalVOCDataset) or "voc_2012" in dataset.ann_file:
         args['task'] = task
